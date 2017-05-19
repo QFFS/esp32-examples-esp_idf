@@ -114,34 +114,24 @@ static esp_err_t i2c_adxl345_config()
     int errcount = 0;
     
     ret = i2c_master_write_slave_reg(I2C_MASTER_NUM, ADXL345_SENSOR_ADDR,BW_RATE, BW_RATE_100HZ);
-    if (ret == ESP_OK)
+    if (ret == ESP_FAIL)
     {
-        errcount++;
+        return ESP_FAIL;
     }   
     
     ret = i2c_master_write_slave_reg(I2C_MASTER_NUM, ADXL345_SENSOR_ADDR,DATA_FORMAT, 1<<3);
-    if (ret == ESP_OK)
-    {
-        errcount++;
-    } 
-
-    ret = i2c_master_write_slave_reg(I2C_MASTER_NUM, ADXL345_SENSOR_ADDR,POWER_CTL, MEASURE);
-    if (ret == ESP_OK)
-    {
-        errcount++;
-    }  
-
-    printf("%d\n",errcount);
-    if (errcount == 3)
-    {
-        return ESP_OK;
-    }
-    else
+    if (ret == ESP_FAIL)
     {
         return ESP_FAIL;
-    }
+    }   
 
+    ret = i2c_master_write_slave_reg(I2C_MASTER_NUM, ADXL345_SENSOR_ADDR,POWER_CTL, MEASURE);
+    if (ret == ESP_FAIL)
+    {
+        return ESP_FAIL;
+    }   
 
+    return ESP_OK;
 }
 /*
 *get x y z acceleration m/s^2
