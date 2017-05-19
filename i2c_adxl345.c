@@ -111,7 +111,6 @@ static esp_err_t i2c_master_read_slave_reg(i2c_port_t i2c_num, uint8_t device_ad
 static esp_err_t i2c_adxl345_config()
 {
     int ret;
-    int errcount = 0;
     
     ret = i2c_master_write_slave_reg(I2C_MASTER_NUM, ADXL345_SENSOR_ADDR,BW_RATE, BW_RATE_100HZ);
     if (ret == ESP_FAIL)
